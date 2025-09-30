@@ -47,9 +47,14 @@ file = st.file_uploader("Upload a PDF file", type='pdf')
 
 if file is not None:
     # Show PDF in UI
-    base64_pdf = base64.b64encode(file.getvalue()).decode('utf-8')
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="1000"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    st.success(f"✅ PDF uploaded: {file.name}")
+    st.download_button(
+    label="📥 Download Uploaded PDF",
+    data=file.getvalue(),
+    file_name=file.name,
+    mime="application/pdf"
+    )
+
 
     if st.button("Extract Invoice Data"):
         pdf_text = pdf_to_text(file)
