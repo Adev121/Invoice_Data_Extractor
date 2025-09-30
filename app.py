@@ -8,6 +8,8 @@ import PyPDF2
 
 load_dotenv()
 
+
+api_key= st.secrets["OPENROUTER_API_KEY"]
 # Function to extract text from PDF
 def pdf_to_text(uploaded_file):
     pdf_reader = PyPDF2.PdfReader(uploaded_file)
@@ -21,7 +23,7 @@ def extract_invoice_data(pdf_text):
     response = requests.post(
         url="https://openrouter.ai/api/v1/chat/completions",
         headers={
-            "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
+            "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json"
         },
         data=json.dumps({
