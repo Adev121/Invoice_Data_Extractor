@@ -38,8 +38,18 @@ def extract_invoice_data(pdf_text):
     )
 
     data = response.json()
-    extracted = data['choices'][0]['message']['content']
-    return extracted if extracted else "No data found"
+
+    if 'choices' in data and len(data['choices']) > 0:
+        extracted = data['choices'][0]['message']['content']
+        return extracted
+    else:
+        st.error("API did not return valid data. Response:")
+        st.write(data)
+        extracted = "No data found"
+        return extracted
+
+    
+    
 
 # Streamlit UI
 st.title("📄 PDF INVOICE EXTRACTOR")
